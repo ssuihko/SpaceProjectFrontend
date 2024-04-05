@@ -1,35 +1,72 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {
+  AppShell,
+  BackgroundImage,
+  Overlay,
+  AspectRatio,
+  Box,
+  Text,
+  Paper,
+} from "@mantine/core";
+import Header from "./components/Header";
+import HomePage from "./components/HomePage";
+import LoginPage from "./components/LoginPage";
+import LogoutPage from "./components/LogoutPage";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { createContext, useState } from "react";
+
+export const AuthContext = createContext();
+
+const loadUserDataFromStorage = () => {
+  const userVal = localStorage.getItem("authUser");
+  if (userVal !== undefined || userVal !== null) return JSON.parse(userVal);
+  return null;
+};
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [authToken, setAuthToken] = useState(
+    localStorage.getItem("authToken") || ""
+  );
+  const [user, setUser] = useState(loadUserDataFromStorage());
+  const navigate = useNavigate();
+
+  const login = (user, authToken) => {
+    setUser(user);
+    setAuthToken(authToken);
+
+    localStorage.setItem("authUser", JSON.stringify(user));
+    localStorage.setItem("authToken", authToken);
+
+    navigate("/");
+  };
+
+  const logout = () => {
+    setUser(null);
+    setAuthToken("");
+
+    localStorage.removeItem("authUser");
+    localStorage.removeItem("authToken");
+
+    navigate("/login");
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <AuthContext.Provider value={{ user, authToken, login, logout }}>
+        <AppShell header={{ height: 60 }} padding="md">
+          <BackgroundImage src="https://i.imgur.com/34gc5UO.jpeg" radius="sm">
+            <Header />
+            <AppShell.Main>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/logout" element={<LogoutPage />} />
+              </Routes>
+            </AppShell.Main>
+          </BackgroundImage>
+        </AppShell>
+      </AuthContext.Provider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
