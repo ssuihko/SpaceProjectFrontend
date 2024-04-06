@@ -14,7 +14,7 @@ I am planning on using this thing as a for-fun personal tool to gather informati
 
 Very much work in progress..!
 
-This repository contains the frontend of the application written in ReactJs. If things go smoothly, I'll eventually deploy on Fly.io or similar. The backend can be found [here](https://github.com/ssuihko/SpaceProject).
+This repository contains the frontend of the application written in Vite Javascript. If things go smoothly, I'll eventually deploy on Fly.io or similar. The backend can be found [here](https://github.com/ssuihko/SpaceProject).
 
 #### Todo Log
 
