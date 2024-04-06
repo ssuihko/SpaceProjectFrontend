@@ -12,6 +12,15 @@
   align-items: center;
 }
 
+.planeticon {
+  margin-top: 5px;
+  margin-left: 10px;
+}
+
+.linkgroup {
+  margin-right: 40px;
+}
+
 .link {
   display: block;
   line-height: 1;

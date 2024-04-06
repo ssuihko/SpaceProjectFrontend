@@ -2,6 +2,9 @@ import { Button, PasswordInput, Stack, TextInput } from "@mantine/core";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import { IconAt, IconPassword } from "@tabler/icons-react";
+import classes from "./LoginPage.module.css";
+
 import {
   BackgroundImage,
   Overlay,
@@ -10,7 +13,6 @@ import {
   Text,
   Paper,
 } from "@mantine/core";
-import classes from "./LoginPage.module.css";
 
 const DEFAULT_FORM_STATE = {
   email: "",
@@ -73,9 +75,16 @@ function LoginPage() {
   }, [user, navigate]);
 
   return (
-    <Stack h={0} bg="var(--mantine-color-body)" align="center" gap="md">
+    <Stack
+      className={classes.loginform}
+      h={0}
+      bg="var(--mantine-color-body)"
+      align="center"
+      gap="md"
+    >
       <form>
         <TextInput
+          leftSection={<IconAt size={16} />}
           placeholder="email"
           name="email"
           required
@@ -84,6 +93,7 @@ function LoginPage() {
           value={formState.email}
         />
         <PasswordInput
+          leftSection={<IconPassword size={16} />}
           placeholder="password"
           name="password"
           required

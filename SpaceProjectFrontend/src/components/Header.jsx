@@ -1,6 +1,7 @@
 import classes from "./Header.module.css";
 import { AppShell, Group } from "@mantine/core";
 import { useLocation } from "react-router-dom";
+import { IconPlanet } from "@tabler/icons-react";
 
 const links = [
   { link: "/", label: "Home " },
@@ -14,8 +15,8 @@ function Header() {
   return (
     <AppShell.Header className={classes.header}>
       <div size="md" className={classes.inner}>
-        <p>Logo</p>
-        <Group gap={30} visibleFrom="xs">
+        <IconPlanet className={classes.planeticon} size={50} />
+        <Group className={classes.linkgroup} gap={30} visibleFrom="xs">
           {links.map((link) => {
             return (
               <a
