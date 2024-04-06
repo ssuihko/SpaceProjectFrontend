@@ -5,22 +5,13 @@ import { useNavigate } from "react-router-dom";
 import { IconAt, IconPassword } from "@tabler/icons-react";
 import classes from "./LoginPage.module.css";
 
-import {
-  BackgroundImage,
-  Overlay,
-  AspectRatio,
-  Box,
-  Text,
-  Paper,
-} from "@mantine/core";
-
 const DEFAULT_FORM_STATE = {
   email: "",
   password: "",
 };
 
 function LoginPage() {
-  const { user, login } = useContext(AuthContext);
+  const { user, login, host } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -46,7 +37,7 @@ function LoginPage() {
       body: JSON.stringify(formState),
     };
 
-    fetch("https://localhost:61026/auth/login", loginOptions)
+    fetch(host + "auth/login", loginOptions)
       .then((res) => {
         if (res.ok) {
           return res.json();

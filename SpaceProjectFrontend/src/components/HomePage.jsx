@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../App";
 import { Box, Text, Paper, Select, Group, Button } from "@mantine/core";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   IconAtom,
   IconBinaryTree,
@@ -10,66 +10,60 @@ import {
   IconRobotFace,
   IconBook2,
 } from "@tabler/icons-react";
-import InfoPage from "./InfoPage";
 import CardItem from "./CardItem";
 import classes from "./HomePage.module.css";
 
 export const HomeContext = createContext();
 
 function HomePage() {
-  const { user, authToken } = useContext(AuthContext);
+  const context = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const [AIs, setAIs] = useState([]);
-  const [people, setPeople] = useState([]);
-  const [spacecrafts, setSpacecrafts] = useState([]);
-  const [books, setBooks] = useState([]);
-  const [concepts, setConcepts] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [searchSelection, setSearchSelection] = useState([]);
 
   useEffect(() => {
     if (searchValue == "" || searchValue == "AI") {
-      setSearchSelection(AIs);
+      setSearchSelection(context.AIs);
     }
 
     if (searchValue == "People") {
-      setSearchSelection(people);
+      setSearchSelection(context.people);
     }
 
     if (searchValue == "Spacecrafts") {
-      setSearchSelection(spacecrafts);
+      setSearchSelection(context.spacecrafts);
     }
 
     if (searchValue == "Books") {
-      setSearchSelection(books);
+      setSearchSelection(context.books);
     }
 
     if (searchValue == "Concepts") {
-      setSearchSelection(concepts);
+      setSearchSelection(context.concepts);
     }
   });
 
   useEffect(() => {
-    if (!user) {
+    if (!context.user) {
       navigate("/login");
     }
-  }, [user, navigate]);
+  }, [context.user, navigate]);
 
   const myHeaders = new Headers({
     "Content-Type": "application/json",
-    Authorization: `Bearer ${authToken}`,
+    Authorization: `Bearer ${context.authToken}`,
   });
 
   // fetch data
   useEffect(() => {
-    fetch("https://localhost:61026/ais", {
+    fetch(context.host + "ais", {
       method: "GET",
       headers: myHeaders,
     })
       .then((response) => response.json())
       .then((data) => {
-        setAIs(data);
+        context.setAIs(data);
       })
       .catch((error) => {
         console.error("Error fetching AIs:", error);
@@ -78,13 +72,13 @@ function HomePage() {
 
   // fetch data
   useEffect(() => {
-    fetch("https://localhost:61026/theories", {
+    fetch(context.host + "theories", {
       method: "GET",
       headers: myHeaders,
     })
       .then((response) => response.json())
       .then((data) => {
-        setConcepts(data);
+        context.setConcepts(data);
       })
       .catch((error) => {
         console.error("Error fetching AIs:", error);
@@ -93,13 +87,13 @@ function HomePage() {
 
   // fetch data
   useEffect(() => {
-    fetch("https://localhost:61026/books", {
+    fetch(context.host + "books", {
       method: "GET",
       headers: myHeaders,
     })
       .then((response) => response.json())
       .then((data) => {
-        setBooks(data);
+        context.setBooks(data);
       })
       .catch((error) => {
         console.error("Error fetching books:", error);
@@ -108,13 +102,13 @@ function HomePage() {
 
   // fetch data
   useEffect(() => {
-    fetch("https://localhost:61026/people", {
+    fetch(context.host + "people", {
       method: "GET",
       headers: myHeaders,
     })
       .then((response) => response.json())
       .then((data) => {
-        setPeople(data);
+        context.setPeople(data);
       })
       .catch((error) => {
         console.error("Error fetching people:", error);
@@ -123,13 +117,13 @@ function HomePage() {
 
   // fetch data
   useEffect(() => {
-    fetch("https://localhost:61026/spacecrafts", {
+    fetch(context.host + "spacecrafts", {
       method: "GET",
       headers: myHeaders,
     })
       .then((response) => response.json())
       .then((data) => {
-        setSpacecrafts(data);
+        context.setSpacecrafts(data);
       })
       .catch((error) => {
         console.error("Error fetching spacecrafts:", error);
@@ -140,102 +134,116 @@ function HomePage() {
   // filter by author
   return (
     <>
-      <HomeContext.Provider value={{ AIs, people, spacecrafts }}>
-        <Box
-          p={10}
-          opacity={5}
-          ta="center"
-          mx="auto"
-          maw={1700}
-          bg="blue.5"
-          my="xl"
-        >
-          <h3> Logged in with email {user ? user : "anonymous"}</h3>
-          <Paper shadow="xl" p="xl">
-            <Text>Hi stranger!</Text>
-            <Text>
-              Here's a neat collection of kewl space related things I'm
-              interested about. Expect a lot of SciFi writers, books,
-              spacecrafts and physics concepts.
-            </Text>
-          </Paper>
+      <Box
+        p={10}
+        opacity={5}
+        ta="center"
+        mx="auto"
+        maw={1700}
+        bg="blue.5"
+        my="xl"
+      >
+        <h3>
+          {" "}
+          Logged in with email {context.user ? context.user : "anonymous"}
+        </h3>
+        <Paper shadow="xl" p="xl">
+          <Text>Hi stranger!</Text>
+          <Text>
+            Here's a neat collection of kewl space related things I'm interested
+            about. Expect a lot of SciFi writers, books, spacecrafts and physics
+            concepts.
+          </Text>
+        </Paper>
 
-          <Group className={classes.topiclinks} justify="center">
-            <Button
-              color="rgba(189, 25, 79, 1)"
-              radius="xl"
-              leftSection={<IconBinaryTree size={14} />}
-            >
-              Mindmap
-            </Button>
+        <Group className={classes.topiclinks} justify="center">
+          <Button
+            component={Link}
+            to="/mindmap"
+            color="rgba(189, 25, 79, 1)"
+            radius="xl"
+            leftSection={<IconBinaryTree size={14} />}
+          >
+            Mindmap
+          </Button>
 
-            <Button
-              leftSection={<IconUsers size={14} />}
-              color="rgba(189, 25, 79, 1)"
-              variant="filled"
-              radius="xl"
-            >
-              People
-            </Button>
+          <Button
+            component={Link}
+            to="/people"
+            leftSection={<IconUsers size={14} />}
+            color="rgba(189, 25, 79, 1)"
+            variant="filled"
+            radius="xl"
+          >
+            People
+          </Button>
 
-            <Button
-              leftSection={<IconBook2 size={14} />}
-              color="rgba(189, 25, 79, 1)"
-              variant="filled"
-              radius="xl"
-            >
-              Books
-            </Button>
+          <Button
+            component={Link}
+            to="/books"
+            leftSection={<IconBook2 size={14} />}
+            color="rgba(189, 25, 79, 1)"
+            variant="filled"
+            radius="xl"
+          >
+            Books
+          </Button>
 
-            <Button
-              color="rgba(189, 25, 79, 1)"
-              radius="xl"
-              leftSection={<IconRobotFace size={14} />}
-            >
-              AI & Androids
-            </Button>
+          <Button
+            component={Link}
+            to="/ais"
+            color="rgba(189, 25, 79, 1)"
+            radius="xl"
+            leftSection={<IconRobotFace size={14} />}
+          >
+            AI & Androids
+          </Button>
 
-            <Button
-              color="rgba(189, 25, 79, 1)"
-              radius="xl"
-              leftSection={<IconRocket size={14} />}
-            >
-              Spacecrafts
-            </Button>
+          <Button
+            component={Link}
+            to="/spacecrafts"
+            color="rgba(189, 25, 79, 1)"
+            radius="xl"
+            leftSection={<IconRocket size={14} />}
+          >
+            Spacecrafts
+          </Button>
 
-            <Button
-              variant="filled"
-              color="rgba(189, 25, 79, 1)"
-              radius="xl"
-              leftSection={<IconAtom size={14} />}
-            >
-              Concepts
-            </Button>
-          </Group>
+          <Button
+            component={Link}
+            to="/concepts"
+            variant="filled"
+            color="rgba(189, 25, 79, 1)"
+            radius="xl"
+            leftSection={<IconAtom size={14} />}
+          >
+            Concepts
+          </Button>
+        </Group>
 
-          <Paper shadow="xl" p="xl">
-            <Select
-              clearable
-              searchable
-              searchValue={searchValue}
-              onSearchChange={setSearchValue}
-              label="Pick topics to filter your search"
-              placeholder="Pick value"
-              data={["People", "Books", "AI", "Spacecrafts", "Concepts"]}
-            />
-          </Paper>
-          <Group grow className={classes.cardgroup}>
-            {searchSelection.length == 0 ? (
-              <p>LOADING......</p>
-            ) : (
-              searchSelection.map((ai, index) => (
-                <CardItem key={index} subject={ai} />
-              ))
-            )}
-          </Group>
-        </Box>
-      </HomeContext.Provider>
+        <Paper shadow="xl" p="xl">
+          <Select
+            clearable
+            searchable
+            searchValue={searchValue}
+            onSearchChange={setSearchValue}
+            label="Pick topics to filter your search"
+            placeholder="Pick value"
+            data={["People", "Books", "AI", "Spacecrafts", "Concepts"]}
+          />
+        </Paper>
+        <Group grow className={classes.cardgroup}>
+          {searchSelection.length == 0 ? (
+            <Text>LOADING......</Text>
+          ) : (
+            searchSelection.map((ai, index) => (
+              <CardItem key={index} subject={ai} />
+            ))
+          )}
+        </Group>
+      </Box>
     </>
   );
 }
+
 export default HomePage;
