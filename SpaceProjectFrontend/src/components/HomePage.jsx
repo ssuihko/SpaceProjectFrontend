@@ -12,6 +12,7 @@ import {
 } from "@tabler/icons-react";
 import CardItem from "./CardItem";
 import classes from "./HomePage.module.css";
+import CreateForm from "./CreateForm";
 
 export const HomeContext = createContext();
 
@@ -154,6 +155,7 @@ function HomePage() {
             about. Expect a lot of SciFi writers, books, spacecrafts and physics
             concepts.
           </Text>
+          <CreateForm />
         </Paper>
 
         <Group className={classes.topiclinks} justify="center">

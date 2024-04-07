@@ -29,9 +29,7 @@ function CardItem({ subject }) {
       </Card.Section>
 
       <Group justify="space-between" mt="md" mb="xs">
-        <Text fw={500}>
-          {subject.name == undefined ? subject.title : subject.name}
-        </Text>
+        <Text fw={500}>{subject.name}</Text>
         <Badge color="pink">{subject.real ? "real" : "fictional"}</Badge>
       </Group>
 
@@ -42,9 +40,7 @@ function CardItem({ subject }) {
           hideLabel="Hide"
           transitionDuration={0}
         >
-          {subject.description == undefined
-            ? subject.profile
-            : subject.description}
+          {subject.description}
         </Spoiler>
       </Text>
 
