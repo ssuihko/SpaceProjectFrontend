@@ -2,6 +2,8 @@ import classes from "./Header.module.css";
 import { AppShell, Group } from "@mantine/core";
 import { useLocation } from "react-router-dom";
 import { IconPlanet } from "@tabler/icons-react";
+import { ActionIcon } from "@mantine/core";
+import { Link } from "react-router-dom";
 
 const links = [
   { link: "/", label: "Home " },
@@ -15,7 +17,16 @@ function Header() {
   return (
     <AppShell.Header className={classes.header}>
       <div size="md" className={classes.inner}>
-        <IconPlanet className={classes.planeticon} size={50} />
+        <ActionIcon
+          variant="transparent"
+          color="rgba(189, 25, 79, 1)"
+          radius="lg"
+          size={55}
+          component={Link}
+          to="/"
+        >
+          <IconPlanet className={classes.planeticon} size={50} />
+        </ActionIcon>
         <Group className={classes.linkgroup} gap={30} visibleFrom="xs">
           {links.map((link) => {
             return (

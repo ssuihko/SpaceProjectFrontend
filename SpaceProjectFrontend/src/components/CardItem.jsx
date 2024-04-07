@@ -9,12 +9,16 @@ import {
 } from "@mantine/core";
 import PropTypes from "prop-types";
 import classes from "./CardItem.module.css";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 // perhaps add images to books as well...
 
-function CardItem({ subject }) {
+function CardItem({ subject, topic }) {
   // change db to contain reality state for people as well
+
+  if (topic == "") topic = "ais";
+
   return (
     <Card height={40} shadow="sm" padding="lg" radius="md" withBorder>
       <Card.Section component="a" href="https://mantine.dev/">
@@ -44,7 +48,15 @@ function CardItem({ subject }) {
         </Spoiler>
       </Text>
 
-      <Button color="blue" fullWidth mt="md" radius="md">
+      <Button
+        className="view-button"
+        component={Link}
+        to={`/${topic.toLowerCase()}/${subject.id}`}
+        color="blue"
+        fullWidth
+        mt="md"
+        radius="md"
+      >
         View Info
       </Button>
     </Card>
@@ -53,6 +65,7 @@ function CardItem({ subject }) {
 
 CardItem.propTypes = {
   subject: PropTypes.object,
+  topic: PropTypes.string,
 };
 
 export default CardItem;

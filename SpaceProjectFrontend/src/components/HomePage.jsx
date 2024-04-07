@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../App";
-import { Box, Text, Paper, Select, Group, Button } from "@mantine/core";
+import { Box, Text, Paper, Select, Group, Button, Grid } from "@mantine/core";
 import { useNavigate, Link } from "react-router-dom";
 import {
   IconAtom,
@@ -151,8 +151,8 @@ function HomePage() {
         <Paper shadow="xl" p="xl">
           <Text>Hi stranger!</Text>
           <Text>
-            Here's a neat collection of kewl space related things I'm interested
-            about. Expect a lot of SciFi writers, books, spacecrafts and physics
+            Here´s a neat collection of kewl space related things I´m interested
+            in. Expect a lot of SciFi writers, books, spacecrafts and physics
             concepts.
           </Text>
           <CreateForm />
@@ -234,15 +234,17 @@ function HomePage() {
             data={["People", "Books", "AI", "Spacecrafts", "Concepts"]}
           />
         </Paper>
-        <Group grow className={classes.cardgroup}>
+        <Grid className={classes.cardgroup}>
           {searchSelection.length == 0 ? (
             <Text>LOADING......</Text>
           ) : (
-            searchSelection.map((ai, index) => (
-              <CardItem key={index} subject={ai} />
+            searchSelection.map((el, index) => (
+              <Grid.Col key={index} span={4}>
+                <CardItem key={index} subject={el} topic={searchValue} />
+              </Grid.Col>
             ))
           )}
-        </Group>
+        </Grid>
       </Box>
     </>
   );

@@ -5,6 +5,7 @@ import HomePage from "./components/HomePage";
 import LoginPage from "./components/LoginPage";
 import MindMap from "./components/Mindmap";
 import LogoutPage from "./components/LogoutPage";
+import TopicView from "./components/TopicView";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { createContext, useState } from "react";
 //import { HomeContext } from "./components/HomePage";
@@ -31,8 +32,6 @@ function App() {
   const [spacecrafts, setSpacecrafts] = useState([]);
   const [books, setBooks] = useState([]);
   const [concepts, setConcepts] = useState([]);
-
-  //  const { AIs } = useContext(HomeContext);
 
   const login = (user, authToken) => {
     setUser(user);
@@ -103,6 +102,23 @@ function App() {
                 <Route
                   path="/books"
                   element={<InfoPage name="book" object={books} />}
+                />
+                <Route path="/ais/:id" element={<TopicView itemList={AIs} />} />
+                <Route
+                  path="/concepts/:id"
+                  element={<TopicView itemList={concepts} />}
+                />
+                <Route
+                  path="/books/:id"
+                  element={<TopicView itemList={books} />}
+                />
+                <Route
+                  path="/people/:id"
+                  element={<TopicView itemList={people} />}
+                />
+                <Route
+                  path="/spacecrafts/:id"
+                  element={<TopicView itemList={spacecrafts} />}
                 />
               </Routes>
             </AppShell.Main>
