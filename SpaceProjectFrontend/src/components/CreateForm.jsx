@@ -8,7 +8,6 @@ import {
   Select,
   TextInput,
   Box,
-  Code,
 } from "@mantine/core";
 import classes from "./CreateForm.module.css";
 import { useContext, useState } from "react";

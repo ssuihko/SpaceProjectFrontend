@@ -1,13 +1,4 @@
-import {
-  Box,
-  Text,
-  Paper,
-  Image,
-  Divider,
-  Stack,
-  Button,
-  Flex,
-} from "@mantine/core";
+import { Text, Paper, Image, Divider, Stack, Button } from "@mantine/core";
 import { useParams, Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../App";

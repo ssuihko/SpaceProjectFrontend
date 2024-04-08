@@ -8,7 +8,12 @@ import LogoutPage from "./components/LogoutPage";
 import TopicView from "./components/TopicView";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { createContext, useState } from "react";
+import { Notifications, notifications } from "@mantine/notifications";
 //import { HomeContext } from "./components/HomePage";
+
+// fix notification jitter effect...
+// graph doesn't disappear when visiting other pages
+// prettier custom nodes!
 
 export const AuthContext = createContext();
 
@@ -32,6 +37,20 @@ function App() {
   const [spacecrafts, setSpacecrafts] = useState([]);
   const [books, setBooks] = useState([]);
   const [concepts, setConcepts] = useState([]);
+
+  const showNotification = () => {
+    notifications.show({
+      style: {
+        position: "absolute",
+        top: "80px",
+        right: "20px",
+      },
+      position: "top-center",
+      color: "red",
+      message: "Item already in the graph!",
+      autoClose: 4000,
+    });
+  };
 
   const login = (user, authToken) => {
     setUser(user);
@@ -72,6 +91,7 @@ function App() {
           setBooks,
           concepts,
           setConcepts,
+          showNotification,
         }}
       >
         <AppShell header={{ height: 60 }} padding="md">

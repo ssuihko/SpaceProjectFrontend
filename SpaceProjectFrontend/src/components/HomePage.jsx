@@ -140,7 +140,7 @@ function HomePage() {
         opacity={5}
         ta="center"
         mx="auto"
-        maw={1700}
+        maw={1000}
         bg="blue.5"
         my="xl"
       >
