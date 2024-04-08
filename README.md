@@ -18,8 +18,12 @@ This repository contains the frontend of the application written in Vite Javascr
 
 #### Todo Log
 
-- add reality fields to People & Concepts
 - Item class
-- node-graphing
+- improve custom nodes: connectivity and look
+- Design infopages
 - modify-delete-add forms
 - more filtering (real/fake)
+- filtering of the fields in the mindmap view
+- make mindmap state saveable to state
+- user can create multiple mindmaps
+- user can create free nodes (not data based)
