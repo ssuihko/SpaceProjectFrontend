@@ -34,13 +34,8 @@ function MindMap() {
 
   const [value, setValue] = useState(null);
   const [search, setSearch] = useState("");
-
-  const nodeStart = [];
-
-  const initialEdges = [];
-
-  const [nodes, setNodes] = useState(nodeStart);
-  const [edges, setEdges] = useState(initialEdges);
+  const [nodes, setNodes] = useState([]);
+  const [edges, setEdges] = useState([]);
 
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -54,6 +49,10 @@ function MindMap() {
     (connection) => setEdges((eds) => addEdge(connection, eds)),
     [setEdges]
   );
+
+  const onNodeRemove = (elementsToRemove) => {
+    setNodes([...nodes.filter((x) => x != elementsToRemove)]);
+  };
 
   const combobox = useCombobox({
     onDropdownClose: () => {
@@ -110,6 +109,7 @@ function MindMap() {
         image: item.image,
         id: item.id,
         linktype: linkType,
+        onNodeRemove: onNodeRemove,
       },
     };
 

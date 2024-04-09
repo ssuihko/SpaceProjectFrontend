@@ -7,6 +7,7 @@ import {
   NativeSelect,
   Select,
   TextInput,
+  Textarea,
   Box,
 } from "@mantine/core";
 import classes from "./CreateForm.module.css";
@@ -19,8 +20,6 @@ function CreateForm() {
 
   const [opened, { open, close }] = useDisclosure(false);
   const [selectedForm, setSelectedForm] = useState("people");
-
-  const [submittedValues, setSubmittedValues] = useState("");
   const [realVal, setRealVal] = useState(false);
   const [selectedCreator, setSelectedCreator] = useState("");
 
@@ -91,8 +90,6 @@ function CreateForm() {
         console.log(err);
       });
 
-    //login(payload.user, payload.authToken);
-
     form.reset();
   };
 
@@ -122,7 +119,7 @@ function CreateForm() {
               placeholder="name"
               {...form.getInputProps("name")}
             />
-            <TextInput
+            <Textarea
               label="Description"
               placeholder="description"
               mt="md"

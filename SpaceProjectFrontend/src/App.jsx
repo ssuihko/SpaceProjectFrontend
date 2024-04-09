@@ -6,9 +6,10 @@ import LoginPage from "./components/LoginPage";
 import MindMap from "./components/Mindmap";
 import LogoutPage from "./components/LogoutPage";
 import TopicView from "./components/TopicView";
+import ExternalLinks from "./components/ExternalLinks";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { createContext, useState } from "react";
-import { Notifications, notifications } from "@mantine/notifications";
+import { notifications } from "@mantine/notifications";
 //import { HomeContext } from "./components/HomePage";
 
 // fix notification jitter effect...
@@ -103,6 +104,7 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/logout" element={<LogoutPage />} />
                 <Route path="/mindmap" element={<MindMap />} />
+                <Route path="/external-sources" element={<ExternalLinks />} />
                 <Route
                   path="/ais"
                   element={<InfoPage name="AI" object={AIs} />}
@@ -123,22 +125,55 @@ function App() {
                   path="/books"
                   element={<InfoPage name="book" object={books} />}
                 />
-                <Route path="/ais/:id" element={<TopicView itemList={AIs} />} />
+                <Route
+                  path="/ais/:id"
+                  element={
+                    <TopicView
+                      path={["ais", "AIId"]}
+                      setItemList={setAIs}
+                      itemList={AIs}
+                    />
+                  }
+                />
                 <Route
                   path="/concepts/:id"
-                  element={<TopicView itemList={concepts} />}
+                  element={
+                    <TopicView
+                      path={["theories", "TheoryId"]}
+                      setItemList={setConcepts}
+                      itemList={concepts}
+                    />
+                  }
                 />
                 <Route
                   path="/books/:id"
-                  element={<TopicView itemList={books} />}
+                  element={
+                    <TopicView
+                      path={["books", "BookId"]}
+                      setItemList={setBooks}
+                      itemList={books}
+                    />
+                  }
                 />
                 <Route
                   path="/people/:id"
-                  element={<TopicView itemList={people} />}
+                  element={
+                    <TopicView
+                      path={["people", "PersonId"]}
+                      setItemList={setPeople}
+                      itemList={people}
+                    />
+                  }
                 />
                 <Route
                   path="/spacecrafts/:id"
-                  element={<TopicView itemList={spacecrafts} />}
+                  element={
+                    <TopicView
+                      path={["spacecrafts", "SpacecraftId"]}
+                      setItemList={setSpacecrafts}
+                      itemList={spacecrafts}
+                    />
+                  }
                 />
               </Routes>
             </AppShell.Main>

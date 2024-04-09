@@ -20,8 +20,8 @@ This repository contains the frontend of the application written in Vite Javascr
 
 - Item class
 - improve custom nodes: connectivity and look
-- Design infopages
-- modify-delete-add forms
+- footer
+- modify changes should show immediately
 - more filtering (real/fake)
 - filtering of the fields in the mindmap view
 - make mindmap state saveable to state

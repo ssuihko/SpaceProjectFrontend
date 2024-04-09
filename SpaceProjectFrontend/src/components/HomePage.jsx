@@ -9,6 +9,7 @@ import {
   IconUsers,
   IconRobotFace,
   IconBook2,
+  IconLink,
 } from "@tabler/icons-react";
 import CardItem from "./CardItem";
 import classes from "./HomePage.module.css";
@@ -221,6 +222,16 @@ function HomePage() {
           >
             Concepts
           </Button>
+          <Button
+            component={Link}
+            to="/external-sources"
+            variant="filled"
+            color="rgba(189, 25, 79, 1)"
+            radius="xl"
+            leftSection={<IconLink size={14} />}
+          >
+            External Links
+          </Button>
         </Group>
 
         <Paper shadow="xl" p="xl">
@@ -238,7 +249,7 @@ function HomePage() {
           {searchSelection.length == 0 ? (
             <Text>LOADING......</Text>
           ) : (
-            searchSelection.map((el, index) => (
+            searchSelection.slice(0, 6).map((el, index) => (
               <Grid.Col key={index} span={4}>
                 <CardItem key={index} subject={el} topic={searchValue} />
               </Grid.Col>
